@@ -10,14 +10,10 @@ const getWeather = async (URLAddress) => {
   try{
     const result = await fetch(URLAddress)
     const jsonData = await result.json()
-    const temperature = jsonData.main.temp
-    const temperatureFeelsLike = jsonData.main.feels_like
-
-    temperature = Math.round(temperature - 273.15)
-    temperatureFeelsLike = Math.round(temperatureFeelsLike - 273.15)
-
-    document.getElementById("answer").innerHTML = "The temperature is " + temperature + " with " + jsonData.weather[0].description + "<br /> <br />" + "The temperature right now is " + temperature + "°C but it feels like " + temperatureFeelsLike + "°C"
-    document.getElementById("weather-icon").innerHTML = "<img src='http://openweathermap.org/img/w/" + jsonData.weather[0].icon + "@2x.png'>"
+    jsonData.main.temp = Math.round(jsonData.main.temp - 273.15)
+    jsonData.main.feels_like = Math.round(jsonData.main.feels_like - 273.15)
+    document.getElementById("answer").innerHTML = "The weather is " + jsonData.weather[0].main + " with " + jsonData.weather[0].description + "<br /> <br />" + "The temperature right now is " + jsonData.main.temp + "°C but it feels like " + jsonData.main.feels_like + "°C"
+    document.getElementById("weather-icon").innerHTML = "<img src= 'https://openweathermap.org/img/wn/" + jsonData.weather[0].icon + "@2x.png'>"
   } catch (error) {
     console.log("An error occurred.")
   }
